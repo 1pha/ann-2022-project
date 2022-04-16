@@ -6,13 +6,11 @@ AUTO = tf.data.AUTOTUNE
 
 
 def load_train_dataset(
+    config,
     path: str = "./data/train/",
     validation_split: float = 0.2,
     img_height: int = 224,
     img_width: int = 224,
-    batch_size: int = 16,
-    randaugment_n: int = 3,
-    randaugment_m: int = 2,
 ):
     data_dir = pathlib.Path(path)
 
@@ -22,10 +20,9 @@ def load_train_dataset(
         subset="training",
         seed=42,
         image_size=(img_height, img_width),
-        batch_size=batch_size,
+        batch_size=config.batch_size,
     )
     train_ds = _apply_normalization(train_ds)
-    train_ds = _apply_augmentation(train_ds, n=randaugment_n, m=randaugment_m)
 
     val_ds = tf.keras.preprocessing.image_dataset_from_directory(
         data_dir,
@@ -33,10 +30,13 @@ def load_train_dataset(
         subset="validation",
         seed=42,
         image_size=(img_height, img_width),
-        batch_size=batch_size,
+        batch_size=config.batch_size,
     )
     val_ds = _apply_normalization(val_ds)
-    val_ds = _apply_augmentation(val_ds, n=randaugment_n, m=randaugment_m)
+
+    if config.use_augmentation:
+        train_ds = _apply_augmentation(train_ds)
+        val_ds = _apply_augmentation(val_ds)
 
     return train_ds.prefetch(AUTO), val_ds.prefetch(AUTO)
 
@@ -50,7 +50,7 @@ def _apply_normalization(dataset):
     return normalized_ds
 
 
-def _apply_augmentation(dataset, n=3, m=2, seed: int = 42):
+def _apply_augmentation(dataset):
 
     simple_aug = tf.keras.Sequential(
         [
