@@ -1,0 +1,93 @@
+import tensorflow as tf
+from tensorflow.keras import layers, utils
+
+
+def inception_module(prev, c1, c2, c3, c4):
+    """
+    prev: previous layer
+    c1, c2, c3, c4 are channels/number of filters for 4 parallel paths
+    c1: channels for path 1
+    c2: a tuple of two channels for path 2
+    c3: a tuple of two channels for path 3
+    c4: channels for path 1
+    """
+
+    # Path 1: 1x1 convolution, c1 channels
+    p1 = layers.Conv2D(filters=c1, kernel_size=(1, 1), activation="relu")(prev)
+
+    # Path 2: 1x1 convolution with channel c2[0], 3x3 convolution with channel c2[1]
+    p2 = layers.Conv2D(filters=c2[0], kernel_size=(1, 1), activation="relu")(prev)
+    p2 = layers.Conv2D(c2[1], kernel_size=(3, 3), activation="relu", padding="same")(p2)
+
+    # Path 3: 1x1 convolution with channel c3[0], 5x5 convolution with channel c3[1]
+    p3 = layers.Conv2D(filters=c3[0], kernel_size=(1, 1), activation="relu")(prev)
+    p3 = layers.Conv2D(
+        filters=c3[1], kernel_size=(5, 5), activation="relu", padding="same"
+    )(p3)
+
+    # Path 4: maxpooling layer with 3x3 pool size and stride of 1, 1x1 convolution with c4 channels
+    p4 = layers.MaxPool2D(pool_size=(3, 3), strides=1, padding="same")(prev)
+    p4 = layers.Conv2D(filters=c4, kernel_size=(1, 1), activation="relu")(p4)
+
+    # Concatenate the outputs of all 4 paths
+    output = layers.Concatenate()([p1, p2, p3, p4])
+
+    return output
+
+
+input = layers.Input(shape=[224, 224, 3], name="Input")
+output = inception_module(input, 6, (6, 6), (6, 6), 6)
+
+inception = tf.keras.Model(input, output)
+
+
+def build_googlenet():
+
+    ## GoogLeNet
+
+    # Input and stem block
+    # Input shape: 224,224,3
+    # 7x7 convolution, 3x3 maxpool, 3x3 convolution, 3x3 maxpool
+
+    input = layers.Input(shape=[224, 224, 3])
+    x = layers.Conv2D(
+        filters=64, kernel_size=(7, 7), strides=2, padding="same", activation="relu"
+    )(input)
+    x = layers.MaxPool2D(pool_size=(3, 3), strides=2, padding="same")(x)
+    x = layers.Conv2D(filters=64, kernel_size=(1, 1), activation="relu")(x)
+    x = layers.Conv2D(
+        filters=192, kernel_size=(3, 3), padding="same", activation="relu"
+    )(x)
+    x = layers.MaxPool2D(pool_size=(3, 3), strides=2, padding="same")(x)
+
+    ### Two inception modules and maxpool
+    x = inception_module(x, 64, (96, 128), (16, 32), 32)
+    x = inception_module(x, 128, (128, 192), (32, 96), 64)
+    x = layers.MaxPool2D(pool_size=(3, 3), strides=2, padding="same")(x)
+
+    ### Five inception modules and maxpool
+    x = inception_module(x, 192, (96, 208), (16, 48), 64)
+    x = inception_module(x, 160, (112, 224), (24, 64), 64)
+    x = inception_module(x, 128, (128, 256), (24, 64), 64)
+    x = inception_module(x, 112, (144, 288), (32, 64), 64)
+    x = inception_module(x, 256, (160, 320), (32, 128), 128)
+    x = layers.MaxPool2D(pool_size=(3, 3), strides=2, padding="same")(x)
+
+    ### Two Inception modules and average pooling layer
+    x = inception_module(x, 256, (160, 320), (32, 128), 128)
+    x = inception_module(x, 384, (192, 384), (48, 128), 128)
+    x = layers.AveragePooling2D(pool_size=(7, 7))(x)
+
+    ### Dropout & classification head
+
+    x = layers.Dropout(0.4)(x)
+    output = layers.Dense(units=2, activation="softmax")(x)
+
+    googlenet = tf.keras.Model(input, output)
+    return googlenet
+
+
+if __name__ == "__main__":
+
+    model = build_googlenet()
+    print(model.summary())
