@@ -57,4 +57,4 @@ class Configuration:
         fname += "/config.json"
         configs = self.to_dict()
         with open(fname, "w") as f:
-            json.dump(configs, f)
+            json.dump(configs, f, indent=4, sort_keys=True)
