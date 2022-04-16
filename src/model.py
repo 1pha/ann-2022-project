@@ -77,11 +77,11 @@ def build_googlenet():
     x = inception_module(x, 256, (160, 320), (32, 128), 128)
     x = inception_module(x, 384, (192, 384), (48, 128), 128)
     x = layers.AveragePooling2D(pool_size=(7, 7))(x)
+    x = layers.Flatten(name="Flatten")(x)
 
     ### Dropout & classification head
-
     x = layers.Dropout(0.4)(x)
-    output = layers.Dense(units=2, activation="softmax")(x)
+    output = layers.Dense(units=1, activation="sigmoid")(x)
 
     googlenet = tf.keras.Model(input, output)
     return googlenet
