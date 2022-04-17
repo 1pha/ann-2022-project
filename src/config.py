@@ -5,7 +5,7 @@ from dataclasses import dataclass, field
 @dataclass
 class Configuration:
 
-    epochs: int = field(default=50, metadata={"help": "How many epochs to run."})
+    epochs: int = field(default=100, metadata={"help": "How many epochs to run."})
     batch_size: int = field(default=32, metadata={"help": "Control batch size"})
     early_stop: bool = field(
         default=True, metadata={"help": "To use early stopping callbacks or not."}
