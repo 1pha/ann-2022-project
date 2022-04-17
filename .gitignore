@@ -4,3 +4,4 @@ __pycache__/
 *.py[cod]
 __pycache__
 models/
+outputs/
