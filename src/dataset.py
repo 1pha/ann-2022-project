@@ -36,7 +36,6 @@ def load_train_dataset(
 
     if config.use_augmentation:
         train_ds = _apply_augmentation(train_ds)
-        val_ds = _apply_augmentation(val_ds)
 
     return train_ds.prefetch(AUTO), val_ds.prefetch(AUTO)
 
