@@ -58,7 +58,7 @@ def plot_loss_acc(hist, title, save=None):
     labs = [l.get_label() for l in _lns]
     acc_ax.legend(_lns, labs, loc="upper left")
 
-    plt.show()
+    # plt.show()
     if save is not None:
         fig.savefig(save + "/loss_acc.png")
     return fig
@@ -94,7 +94,7 @@ def plot_loss_auc(hist, title, save=None):
     labs = [l.get_label() for l in _lns]
     acc_ax.legend(_lns, labs, loc="upper left")
 
-    plt.show()
+    # plt.show()
     if save is not None:
         fig.savefig(save + "/loss_auc.png")
     return fig
@@ -130,7 +130,7 @@ def plot_auc_acc(hist, title, save=None):
     labs = [l.get_label() for l in _lns]
     acc_ax.legend(_lns, labs, loc="upper left")
 
-    plt.show()
+    # plt.show()
     if save is not None:
         fig.savefig(save + "/auc_acc.png")
     return fig
