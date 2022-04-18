@@ -3,14 +3,16 @@
 I was assigned with GoogleNet [^1], a.k.a. Inception model to increase performance of retianl dataset which is to classify diabetic retinopathy from fundus images.
 Since GoogleNet was released in 2014, there has been tremendous works to increase performance other than the model structure such as data augmentation, scheduling learning rate or more optimizers[^2]. Followings are widely used techniques applied in recent vision models to improve performance.
 
-+ RandAugment [^3]: With typical datasets such as ImageNet or CIFAR, which are said to be _natural images_, this RandAugment generally improves performance. However with this specialized medical images, most of transformations used in RandAugment is not valid. Therefore I used 3 techniques - flips, slight level of rotation and zoom randomly.
-+ Weight Decay [^4]: One way to reduce overfitting is by giving constraints on the norm of weight size. Here I tested with L2 and L1 norm to find the best one. Also Adam optimizer was used, compared to original inception model trained with Momentum SGD with 0.9 hyperparameter.
-+ Label Smoothing [^5]: Typical classification uses one-hot vector as a class label. In order to give softer target labels to model, label smoothing was introduced. Here I tested with label temperature for 0.3.
-+ Learning rate Scheduling: The original paper scheduled their learning rate by reducing their learning rate by 4% every 8 epochs. However with their models trained on larger dataset, training with same logic might not help. Therefore I scheduled to reduce learning rate when validation loss seemed to saturate.
-+ Stochastic Depth [^6]: This method only works for networks that has residuals so that the input pass can skip random layers. Since Inception does not have skip connections, this method was not used.
-+ Early stoppings ([Keras](https://keras.io/api/callbacks/early_stopping/)): I have monitored validation loss to halt training when no further improvement can be considered. Patience for early stopping was 8 epochs.
++ **RandAugment** [^3]: With typical datasets such as ImageNet or CIFAR, which are said to be _natural images_, this RandAugment generally improves performance. However with this specialized medical images, most of transformations used in RandAugment is not valid. Therefore I used 3 techniques - flips, slight level of rotation and zoom randomly.
++ **Weight Decay** [^4]: One way to reduce overfitting is by giving constraints on the norm of weight size. Here I tested with L2 and L1 norm to find the best one. Also Adam optimizer was used, compared to original inception model trained with Momentum SGD with 0.9 hyperparameter.
++ **Label Smoothing** [^5]: Typical classification uses one-hot vector as a class label. In order to give softer target labels to model, label smoothing was introduced. Here I tested with label temperature for 0.3.
++ **Learning rate Scheduling**: The original paper scheduled their learning rate by reducing their learning rate by 4% every 8 epochs. However with their models trained on larger dataset, training with same logic might not help. Therefore I scheduled to reduce learning rate when validation loss seemed to saturate.
++ **Early stoppings** ([Keras](https://keras.io/api/callbacks/early_stopping/)): I have monitored validation loss to halt training when no further improvement can be considered. Patience for early stopping was 8 epochs.
++ **Stochastic Depth** [^6]: This method only works for networks that has residuals so that the input pass can skip random layers. Since Inception does not have skip connections, this method was not used.
 
-Therefore total **16 (2 * 2 * 2 * 2) configurations** were tested..
+Therefore total **128 (2 * 2 * 2 * 2) configurations** were tested.
++ Initial Learning rate: $10^{-2}$, $10^{-3}$
++ Batchc size: 16, 32
 + Augmentation: Apply or Not
 + Weight Decay: L2 or None
 + Label Smoothing: Apply(=0.3) or Not
@@ -21,10 +23,15 @@ Therefore total **16 (2 * 2 * 2 * 2) configurations** were tested..
 
 ### Best Configuration?
 
+### Small Datasets
+Even though we had a balanced binary classification problem, lack of training data leads to easier early saturation in the loss level
 
 ### Large Batch size did not help
 
 In all cases, batch size of 32 failed to optimize while 16 was able to. Since we had around 1.2k training data, having larger batch sizes takes opportunity of watching 
+
+### Regularizer requires larger learning rate.
+In case of L2-normalization, in most cases they require a large learning rate of $10^{-2}$ while trainings without regularization are satisified with initial learning rate of $10^{-3}$.
 
 ### Failure Cases
 
