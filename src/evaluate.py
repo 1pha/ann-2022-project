@@ -63,6 +63,7 @@ def plot_loss_acc(hist, title, save=None):
         fig.savefig(save + "/loss_acc.png")
     return fig
 
+
 def plot_loss_auc(hist, title, save=None):
 
     fig, loss_ax = plt.subplots(figsize=(12, 7))
@@ -97,6 +98,7 @@ def plot_loss_auc(hist, title, save=None):
     if save is not None:
         fig.savefig(save + "/loss_auc.png")
     return fig
+
 
 def plot_auc_acc(hist, title, save=None):
 
