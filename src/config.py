@@ -14,10 +14,7 @@ class Configuration:
         default=8, metadata={"help": "Will monitor on loss with epoch-wise. Default=5"}
     )
     seed: int = field(default=42, metadata={"help": "Randomized seeds."})
-    optimizer: str = field(
-        default="adam",
-        metadata={"help": "Which optimizer to use."}
-    )
+    optimizer: str = field(default="adam", metadata={"help": "Which optimizer to use."})
     learning_rate: float = field(
         default=1e-3, metadata={"help": "Initial learning rate to use."}
     )
@@ -42,11 +39,23 @@ class Configuration:
     )
     scheduler: str = field(
         default=None,
-        metadata={"help" : "Learning rate scheduler. Use one of 'cosine' or 'cyclic'"}
+        metadata={"help": "Learning rate scheduler. Use one of 'cosine' or 'cyclic'"},
     )
     maximal_learning_rate: float = field(
         default=1e-3,
-        metadata={"help" : "Maximal value of learning rate when cyclie scheduler was used."}
+        metadata={
+            "help": "Maximal value of learning rate when cyclie scheduler was used."
+        },
+    )
+    regularizer: str = field(
+        default=None,
+        metadata={
+            "help": "Which regularizer to use. Default as None, which means we don't use regularizer. Either choose l1 or l2. Regularizer will be applied to all weights and biases."
+        },
+    )
+    reg_lambda: float = field(
+        default=1e-2,
+        metadata={"help": "Weights for regularizer term."}
     )
 
     def to_dict(self):
