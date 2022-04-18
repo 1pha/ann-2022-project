@@ -14,5 +14,5 @@ __all__ = [
     "plot_loss_acc",
     "plot_loss_auc",
     "build_optimizer",
-    "get_today"
+    "get_today",
 ]
