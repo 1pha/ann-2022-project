@@ -11,7 +11,7 @@ class Configuration:
         default=True, metadata={"help": "To use early stopping callbacks or not."}
     )
     patience: int = field(
-        default=8, metadata={"help": "Will monitor on loss with epoch-wise. Default=5"}
+        default=10, metadata={"help": "Will monitor on loss with epoch-wise. Default=5"}
     )
     seed: int = field(default=42, metadata={"help": "Randomized seeds."})
     optimizer: str = field(default="adam", metadata={"help": "Which optimizer to use."})
@@ -54,7 +54,7 @@ class Configuration:
         },
     )
     reg_lambda: float = field(
-        default=1e-2, metadata={"help": "Weights for regularizer term."}
+        default=1e-5, metadata={"help": "Weights for regularizer term."}
     )
 
     def to_dict(self):
