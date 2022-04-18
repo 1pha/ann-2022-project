@@ -4,6 +4,7 @@ from .evaluate import calculate_result, plot_auc_acc, plot_loss_acc, plot_loss_a
 from .config import Configuration
 from .optimizers import build_optimizer
 from .utils import get_today
+from .train import run
 
 __all__ = [
     "build_googlenet",
@@ -15,4 +16,5 @@ __all__ = [
     "plot_loss_auc",
     "build_optimizer",
     "get_today",
+    "run",
 ]
