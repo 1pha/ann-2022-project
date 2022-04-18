@@ -20,7 +20,7 @@ Therefore total **128 (2 * 2 * 2 * 2) configurations** were tested.
 
 
 ## Findings
-
+Project wandb results found in [LINK](https://wandb.ai/1pha/ann-2022).
 ### Best Configuration?
 
 ### Small Datasets
