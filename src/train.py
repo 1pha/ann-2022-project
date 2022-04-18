@@ -5,8 +5,12 @@ from .dataset import load_train_dataset
 from .optimizers import build_optimizer
 from .evaluate import plot_auc_acc, plot_loss_acc, plot_loss_auc
 
+import wandb
+from wandb.keras import WandbCallback
 
 def run(config):
+    
+    wandb.init(config=config.to_dict(), project="ann-2022", name=config.output_dir[9:])
 
     model = build_googlenet(config)
     train_ds, valid_ds = load_train_dataset(config)
@@ -26,14 +30,14 @@ def run(config):
     if config.early_stop:
         callbacks.append(
             tf.keras.callbacks.EarlyStopping(
-                monitor="val_loss", patience=config.patience
+                monitor="val_loss", patience=config.patience, min_delta=1e-4
             )
         )
 
     if config.scheduler == "plateau":
         callbacks.append(
             tf.keras.callbacks.ReduceLROnPlateau(
-                monitor="val_loss", factor=0.2, patience=5, min_lr=1e-5
+                monitor="val_loss", factor=0.2, patience=8, min_lr=1e-6
             )
         )
 
@@ -41,31 +45,16 @@ def run(config):
         tf.keras.callbacks.ModelCheckpoint(
             config.output_dir
             + "/ckpts/{epoch:02d}-AUC{val_auc:.4f}-ACC{val_accuracy:.4f}.hdf5",
-            monitor="val_loss",
+            monitor="val_accuracy",
             save_best_only=True,
             save_weights_only=False,
+            initial_value_threshold=0.83
         )
     )
 
-    callbacks.append(
-        tf.keras.callbacks.CSVLogger(
-            config.output_dir + "/hist.csv", separator=",", append=True,
-        )
-    )
+    callbacks.append(WandbCallback())
 
     hist = model.fit(
         train_ds, validation_data=valid_ds, epochs=config.epochs, callbacks=callbacks
     )
-    config.save(config.output_dir)
-
-    title = (
-        f"Batch size {config.batch_size}, {config.optimizer.capitalize()}, {config.scheduler} \n Label Smoothing={config.label_smoothing} Augmentation: {config.use_augmentation}",
-    )
-
-    if "auc" not in hist.history.keys():
-        hist.history["auc"] = hist.history["auc_1"]
-        hist.history["val_auc"] = hist.history["val_auc_1"]
-
-    plot_loss_acc(hist, title, config.output_dir)
-    plot_loss_auc(hist, title, config.output_dir)
-    plot_auc_acc(hist, title, config.output_dir)
+    wandb.finish()
