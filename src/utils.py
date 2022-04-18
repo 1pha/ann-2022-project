@@ -1,5 +1,6 @@
 from datetime import datetime as dt
 
+
 def get_today():
 
     td = dt.today()
