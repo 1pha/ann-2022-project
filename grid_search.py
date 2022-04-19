@@ -10,7 +10,6 @@ for learning_rate in [1e-2, 1e-3]:
                 for label_smoothing in [0.3, 0]:
                     for scheduler in ["plateau", None]:
                         config = Configuration()
-                        
                         tf.random.set_seed(config.seed)
                         
                         config.learning_rate = learning_rate

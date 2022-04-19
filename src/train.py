@@ -41,17 +41,6 @@ def run(config):
             )
         )
 
-    callbacks.append(
-        tf.keras.callbacks.ModelCheckpoint(
-            config.output_dir
-            + "/ckpts/{epoch:02d}-AUC{val_auc:.4f}-ACC{val_accuracy:.4f}.hdf5",
-            monitor="val_accuracy",
-            save_best_only=True,
-            save_weights_only=False,
-            initial_value_threshold=0.83
-        )
-    )
-
     callbacks.append(WandbCallback())
 
     hist = model.fit(
