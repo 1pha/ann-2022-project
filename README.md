@@ -10,7 +10,7 @@ Since GoogleNet was released in 2014, there has been tremendous works to increas
 + **Early stoppings** ([Keras](https://keras.io/api/callbacks/early_stopping/)): I have monitored validation loss to halt training when no further improvement can be considered. Patience for early stopping was 8 epochs.
 + **Stochastic Depth** [^6]: This method only works for networks that has residuals so that the input pass can skip random layers. Since Inception does not have skip connections, this method was not used.
 
-Therefore total **128 (2 * 2 * 2 * 2) configurations** were tested.
+Therefore total **64 ($2^6$) configurations** were tested.
 + Initial Learning rate: $10^{-2}$, $10^{-3}$
 + Batchc size: 16, 32
 + Augmentation: Apply or Not
@@ -20,22 +20,7 @@ Therefore total **128 (2 * 2 * 2 * 2) configurations** were tested.
 
 
 ## Findings
-Project wandb results found in [LINK](https://wandb.ai/1pha/ann-2022).
-### Best Configuration?
-
-### Small Datasets
-Even though we had a balanced binary classification problem, lack of training data leads to easier early saturation in the loss level
-
-### Large Batch size did not help
-
-In all cases, batch size of 32 failed to optimize while 16 was able to. Since we had around 1.2k training data, having larger batch sizes takes opportunity of watching 
-
-### Regularizer requires larger learning rate.
-In case of L2-normalization, in most cases they require a large learning rate of $10^{-2}$ while trainings without regularization are satisified with initial learning rate of $10^{-3}$.
-
-### Failure Cases
-
-Below is the best AUC results' confusion matrix.
+Project wandb results found in [LINK](https://wandb.ai/1pha/ann-2022) and also [the report](https://wandb.ai/1pha/ann-2022/reports/ANN-Report-Inception--VmlldzoxODYwMTkz)
 
 [^1]: Szegedy, Christian, et al. "**Going deeper with convolutions.**" Proceedings of the IEEE conference on computer vision and pattern recognition. 2015.
 [^2]: Bello, Irwan, et al. "**Revisiting resnets: Improved training and scaling strategies.**" Advances in Neural Information Processing Systems 34 (2021).
