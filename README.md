@@ -19,8 +19,9 @@ Therefore total **64 ($2^6$) configurations** were tested.
 + Learning rate Scheduling: Reduce on Plateau or Not
 
 
-## Findings
-Project wandb results found in [LINK](https://wandb.ai/1pha/ann-2022) and also [the report](https://wandb.ai/1pha/ann-2022/reports/ANN-Report-Inception--VmlldzoxODYwMTkz)
+## Findings & Results
+Project wandb results found in [LINK](https://wandb.ai/1pha/ann-2022) and also [the report](https://wandb.ai/1pha/ann-2022/reports/ANN-Report-Inception--VmlldzoxODYwMTkz).
+Visualization of success/failure cases from validation dataset is stored [here](./analysis.ipynb).
 
 [^1]: Szegedy, Christian, et al. "**Going deeper with convolutions.**" Proceedings of the IEEE conference on computer vision and pattern recognition. 2015.
 [^2]: Bello, Irwan, et al. "**Revisiting resnets: Improved training and scaling strategies.**" Advances in Neural Information Processing Systems 34 (2021).
