@@ -40,6 +40,38 @@ def load_train_dataset(
     return train_ds.prefetch(AUTO), val_ds.prefetch(AUTO)
 
 
+def load_test_dataset(
+    config,
+    path: str = "./data/test/",
+    img_height: int = 224,
+    img_width: int = 224,
+):
+    from glob import glob
+    import pandas as pd
+    from keras.preprocessing.image import ImageDataGenerator
+
+    test_pic_list = list(glob(path + "/*"))
+    test_df = pd.DataFrame(
+        {
+            "filename": test_pic_list,
+            "predicted": [-1 for i in range(len(test_pic_list))],
+        }
+    )
+    test_datagen = ImageDataGenerator(
+        rescale=1.0 / 255,
+    )
+    test_gen = test_datagen.flow_from_dataframe(
+        dataframe=test_df,
+        directory=None,
+        x_col="filename",
+        class_mode=None,
+        shuffle=False,
+        target_size=(img_height, img_width),
+        batch_size=config.batch_size,
+    )
+    return test_gen, test_df
+
+
 def _apply_normalization(dataset):
 
     normalization_layer = tf.keras.layers.experimental.preprocessing.Rescaling(
