@@ -8,8 +8,9 @@ from .evaluate import plot_auc_acc, plot_loss_acc, plot_loss_auc
 import wandb
 from wandb.keras import WandbCallback
 
+
 def run(config):
-    
+
     wandb.init(config=config.to_dict(), project="ann-2022", name=config.output_dir[9:])
 
     model = build_googlenet(config)
