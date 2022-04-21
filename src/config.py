@@ -29,7 +29,7 @@ class Configuration:
         },
     )
     use_augmentation: bool = field(
-        default=True, metadata={"help": "Whether to use augmentation or not."}
+        default=True, metadata={"help": "Whether to use augmentation or not. Put `False`, `soft` or `hard`."}
     )
     output_dir: str = field(
         default=None,
