@@ -19,9 +19,14 @@ Therefore total **64 ($2^6$) configurations** were tested.
 + Learning rate Scheduling: Reduce on Plateau or Not
 
 
-## Findings & Results
+## Project 1: Findings & Results (Due Apr. 21, 2022)
 Project wandb results found in [LINK](https://wandb.ai/1pha/ann-2022) and also [the report](https://wandb.ai/1pha/ann-2022/reports/ANN-Report-Inception--VmlldzoxODYwMTkz).
 Visualization of success/failure cases from validation dataset is stored [here](./analysis.ipynb).
+
+## Project 2: Findings & Results (Due May 6, 2022)
+Configurations
++ Augmentation (this time, None / Soft / Hard)
++ Pre-trained (with / without / linear probing)
 
 [^1]: Szegedy, Christian, et al. "**Going deeper with convolutions.**" Proceedings of the IEEE conference on computer vision and pattern recognition. 2015.
 [^2]: Bello, Irwan, et al. "**Revisiting resnets: Improved training and scaling strategies.**" Advances in Neural Information Processing Systems 34 (2021).
