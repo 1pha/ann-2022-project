@@ -1,6 +1,5 @@
-import re
 import tensorflow as tf
-from tensorflow.keras import layers, utils
+from tensorflow.keras import models, layers, utils
 
 
 def _set_regularizer(regularizer=None, _lambda=1e-2):
@@ -162,8 +161,41 @@ def build_googlenet(config):
     googlenet = tf.keras.Model(input, output)
     return googlenet
 
+def load_pretrained_googlenet(config):
+    
+    """
+    https://www.tensorflow.org/api_docs/python/tf/keras/applications/inception_v3/InceptionV3
+    https://keras.io/api/applications/#usage-examples-for-image-classification-models
+    """
+    
+    # create the base pre-trained model
+    base_model = tf.keras.applications.inception_v3.InceptionV3(
+        include_top=False,
+        weights='imagenet',
+        input_shape=(224, 224, 3),
+    )
+    if config.linear_probing:
+        base_model.trainable = False
+    x = base_model.output
+    x = layers.AveragePooling2D()(x)
+    x = layers.Dense(2048, activation='relu')(x)
+    predictions = layers.Dense(1, activation='sigmoid')(x)
+    model = models.Model(inputs=base_model.input, outputs=predictions)
+    model.summary()
+    return model
+
+def load_googlenet(config):
+    
+    if config.pretrained:
+        return load_pretrained_googlenet(config)
+
+    else:
+        return build_googlenet(config)
 
 if __name__ == "__main__":
 
-    model = build_googlenet()
+    from .config import Configuration
+    config = Configuration()
+    model = load_pretrained_googlenet()
+    # model = build_googlenet()
     print(model.summary())

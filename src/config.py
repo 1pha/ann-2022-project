@@ -56,7 +56,14 @@ class Configuration:
     reg_lambda: float = field(
         default=1e-5, metadata={"help": "Weights for regularizer term."}
     )
-
+    use_pretrained: bool = field(
+        default=False,
+        metadata={"help": "Load pre-trained Inception models"}
+    )
+    linear_probing: bool = field(
+        default=False,
+        metadata={"help": "If False, do not train pre-trained models. If True, update pre-trained weights."}
+    )
     def to_dict(self):
         return vars(self)
 
