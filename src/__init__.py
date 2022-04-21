@@ -1,4 +1,4 @@
-from .model import build_googlenet
+from .model import load_googlenet
 from .dataset import load_train_dataset
 from .evaluate import calculate_result, plot_auc_acc, plot_loss_acc, plot_loss_auc
 from .config import Configuration
@@ -7,7 +7,7 @@ from .utils import get_today
 from .train import run
 
 __all__ = [
-    "build_googlenet",
+    "load_googlenet",
     "load_train_dataset",
     "calculate_result",
     "Configuration",
