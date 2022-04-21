@@ -3,7 +3,7 @@ import tensorflow as tf
 
 from src import run, Configuration
 
-for seed in [42, 43, 44, 45, 46]:
+for seed in [43, 44, 45, 46]:
     for augmentation in [False, "soft", "hard"]:
         for pre_trained in ["no_trained", "freeze", "fine"]:
 
@@ -16,11 +16,11 @@ for seed in [42, 43, 44, 45, 46]:
                 
             elif pre_trained == "freeze":
                 config.use_pretrained = True
-                config.linear_proibing = False
+                config.linear_probing = False
                 
             elif pre_trained == "fine":
                 config.use_pretrained = True
-                config.linear_proibing = True
+                config.linear_probing = True
                 
             tf.random.set_seed(config.seed)
             config.output_dir = f"Seed{seed}-Aug{augmentation}-{pre_trained}"
