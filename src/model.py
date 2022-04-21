@@ -168,10 +168,12 @@ def load_pretrained_googlenet(config):
     https://keras.io/api/applications/#usage-examples-for-image-classification-models
     """
     
-    # create the base pre-trained model
+    if not config.use_pretrained:
+        config.linear_probing = False
+        
     base_model = tf.keras.applications.inception_v3.InceptionV3(
         include_top=False,
-        weights='imagenet',
+        weights=None if not config.use_pretrained else "imagenet",
         input_shape=(224, 224, 3),
     )
     if config.linear_probing:
@@ -184,18 +186,12 @@ def load_pretrained_googlenet(config):
     model.summary()
     return model
 
-def load_googlenet(config):
-    
-    if config.pretrained:
-        return load_pretrained_googlenet(config)
-
-    else:
-        return build_googlenet(config)
-
 if __name__ == "__main__":
 
-    from .config import Configuration
+    from config import Configuration
     config = Configuration()
-    model = load_pretrained_googlenet()
+    config.use_pretrained = False
+    config.linear_probing = False
+    model = load_pretrained_googlenet(config)
     # model = build_googlenet()
     print(model.summary())
