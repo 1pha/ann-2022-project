@@ -1,6 +1,6 @@
 import tensorflow as tf
 
-from .model import build_googlenet
+from .model import build_googlenet, load_pretrained_googlenet
 from .dataset import load_train_dataset
 from .optimizers import build_optimizer
 from .evaluate import plot_auc_acc, plot_loss_acc, plot_loss_auc
@@ -11,9 +11,9 @@ from wandb.keras import WandbCallback
 
 def run(config):
 
-    wandb.init(config=config.to_dict(), project="ann-2022", name=config.output_dir[9:])
+    wandb.init(config=config.to_dict(), project="ann-2022-assignment2", name=config.output_dir)
 
-    model = build_googlenet(config)
+    model = load_pretrained_googlenet(config)
     train_ds, valid_ds = load_train_dataset(config)
 
     steps_per_epoch = len(train_ds)
