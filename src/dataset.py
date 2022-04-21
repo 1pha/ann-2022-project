@@ -34,8 +34,10 @@ def load_train_dataset(
     )
     val_ds = _apply_normalization(val_ds)
 
-    if config.use_augmentation:
-        train_ds = _apply_augmentation(train_ds)
+    if config.use_augmentation == "soft":
+        train_ds = _apply_soft_augmentation(train_ds)
+    elif config.use_augmentation == "hard":
+        train_ds = _apply_hard_augmentation(train_ds)
 
     return train_ds.prefetch(AUTO), val_ds.prefetch(AUTO)
 
@@ -81,13 +83,28 @@ def _apply_normalization(dataset):
     return normalized_ds
 
 
-def _apply_augmentation(dataset):
+def _apply_soft_augmentation(dataset):
+    
+    simple_aug = tf.keras.Sequential(
+        [
+            layers.RandomFlip(),
+            layers.RandomRotation(factor=0.01),
+            layers.RandomZoom(height_factor=0.01, width_factor=0.01),
+        ]
+    )
+
+    augmentation_ds = dataset.map(
+        lambda x, y: (simple_aug(x), y), num_parallel_calls=AUTO
+    )
+    return augmentation_ds
+
+def _apply_hard_augmentation(dataset):
 
     simple_aug = tf.keras.Sequential(
         [
             layers.RandomFlip(),
-            layers.RandomRotation(factor=0.02),
-            layers.RandomZoom(height_factor=0.2, width_factor=0.2),
+            layers.RandomRotation(factor=0.3),
+            layers.RandomZoom(height_factor=0.05, width_factor=0.05),
         ]
     )
 
