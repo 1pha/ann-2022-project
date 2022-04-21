@@ -5,12 +5,12 @@ from src import run, Configuration
 
 for seed in [42, 43, 44, 45, 46]:
     for augmentation in [False, "soft", "hard"]:
-        for pre_trained in [False, "freeze", "fine"]:
+        for pre_trained in ["no_trained", "freeze", "fine"]:
 
             config = Configuration()
             config.seed = seed
             config.use_augmentation = augmentation
-            if pre_trained == False:
+            if pre_trained == "no_trained":
                 config.use_pretrained = False
                 config.linear_probing = False
                 
@@ -23,6 +23,7 @@ for seed in [42, 43, 44, 45, 46]:
                 config.linear_proibing = True
                 
             tf.random.set_seed(config.seed)
+            config.output_dir = f"Seed{seed}-Aug{augmentation}-{pre_trained}"
 
             try:
                 tf.keras.backend.clear_session()
