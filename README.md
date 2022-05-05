@@ -24,9 +24,11 @@ Project wandb results found in [LINK](https://wandb.ai/1pha/ann-2022) and also [
 Visualization of success/failure cases from validation dataset is stored [here](./analysis.ipynb).
 
 ## Project 2: Findings & Results (Due May 6, 2022)
-Configurations
-+ Augmentation (this time, None / Soft / Hard)
-+ Pre-trained (with / without / linear probing)
+Total 9 Configurations, with each configuration ran with 10 seeds, resulting in 90 total experiments.
++ Augmentation (None / Soft / Hard)
++ Pre-trained (scratch / linear-probing / fine-tune)
+
+Experiment results descirbed in [wandb report](https://wandb.ai/1pha/ann-2022-assignment2/reports/ANN2022-Assignment-2-Report--VmlldzoxOTUxOTI4?accessToken=skj92vqjs4l1uz8lc85jvnu8ykebiykhk2lgqgibhec38e0i71lu2ug1xy4d9oos)
 
 [^1]: Szegedy, Christian, et al. "**Going deeper with convolutions.**" Proceedings of the IEEE conference on computer vision and pattern recognition. 2015.
 [^2]: Bello, Irwan, et al. "**Revisiting resnets: Improved training and scaling strategies.**" Advances in Neural Information Processing Systems 34 (2021).
