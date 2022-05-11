@@ -20,26 +20,23 @@ The review for each paper should be structured as follows:
 ## [Paper 1](paper1.pdf)
 
 ### Summary
-+ This paper suggests a new model based on multi-layer perceptron (MLP), which was regarded as vanilla model to be complete complex tasks. THe major contribution of this paper is a comparable results with typical models and scalability proven.
++ This paper suggests a new model based on multi-layer perceptron (MLP), which was regarded as vanilla model to be complete complex tasks. The major contribution of this paper is a comparable results with typical models and scalability proven.
 
 ### Strengths
 + Suggested method is interesting and their results show that gMLP has comparable ability to capture local relationships, especially in visionary tasks.
 + As suggested architecture is far different from typical models widely used in comparing tasks, doing the fair comparison between these models is tough but done well, such as using reached best perplexity instead of naive number of parameters of models. 
-+ Suggested aMLP to show effects of attention/gating mechanism was fair and great, by viewing their results from multiple criteria. 
++ Well analyzed weakness on tasks requiring cross-sentence comprehension. It was well controlled experiment figuring out where attention is strong at.
 
 ### Weaknesses
-+ Explaining spatial gating unit was not clear, e.g. how to split the introduced effective split of Z was not produced. It still remains unclear that what splitting the token embeddings into half and sending one of two to spatial projections do or why they work. In depth meaning of each process is definitely required.
-+ Listed comparison results with language models are highly contrasted with bias, based on gMLP results, e.g. results from perplexity is highlighted while tasks requiring multiple sentences such as MNLI or SQuAD are diminished. There is a clear lack of understandings for gMLP in long documents and these were shortly analyzed. Furthermore, alternative to this lack of performance was increasing model sizes, which is in most cases makes sense in other works as well. Their reported higher results on such cross-sentence tasks were achieved by 3 times larger model compared to BERT, which implies scalabiliy of this architecture but similar performance with drastic superiority in number of parameters was expected.
-+ Comparing attention mechanism only with BERT is not sufficient. There are many newly introduced attentions in order to deal with various applications such as Sparse attention or Swin, who are variations of attention mechanisms to capture far/local relations respectively.
-+ Visualizing weight was great, but we should question how to get an explanation from this gMLP model. The typical transformer models were able to retrieve the explanation by instance level, i.e. visualizing [CLS] tokens' attention relation with other visual tokens. In contrast there is no representative embeddings or tokens to be utilized for explanability. However, if model is pre-trained with additional token, this might not be impossible.
-+ aMLp, suggested for ablation study, outperforms on tasks requiring comprehension of multiple/cross-sentences. This seemed to me that gMLP outperforms in a task that requires localization while attention mechanisms helps capturing far relations.
++ Explaining spatial gating unit was not clear, e.g. how to split the introduced effective split of Z was not produced. It still remains unclear that what splitting the token embeddings into half affects the training. In depth meaning of each process is definitely required.
++ Visualizing weight was great, but we should question how to get an explanation from this gMLP model. The typical transformer models were able to retrieve the explanation by instance level, i.e. visualizing [CLS] tokens' attention relation with other visual tokens. In contrast there is no representative embeddings or tokens to be utilized for its explanability. 
 
 
 ### Rating and Justification
-+ Accepted: The suggested ideas are novel and well compared with conventional models but extra analysis on their results are required.
++ Accepted: The suggested ideas are novel and well compared with conventional models but lacks persuasiveness in their methods.
 
 ### Additional Comments
-+ Results from training higher resolution in vision works would have made this work better.
++ Comparing higher resolution trained results would make this work more valuable.
 
 ### Score
 + Weak accept
@@ -47,24 +44,25 @@ The review for each paper should be structured as follows:
 ## [Paper 2](paper2.pdf)
 
 ### Summary
-+ This work presents a simple but intuitive multi-layer perceptron based architecture which tries to imitate transformers' input processing procedure. Their results are well proven by sequential of ablation studies.
++ This work presents a simple but intuitive multi-layer perceptron based architecture which tries to imitate transformers' input processing procedure. Their justification of introduced methods was well proven by well-designed series of experiments.
 
 ### Strengths
-+ Seuqence of experiments are well designed. Starting with comparing multiple task performances with typical models, visualization of weights and possible weakpoints of the model innates, such as vulnerable to overfitting. 
++ Building up transformers behavior was novel and makes sense. Their architecture was well justified through a series of ablation studies including removal/substitution of linear interaction layer to mlp or convolutions.
++ Various training scheme shows chance that the model is applicable with new techniques and also scalable from Table 3.
+<!-- + Performance results are well listed. Starting with comparing multiple task performances with typical models, visualization of weights and possible weakpoints of the model innates, such as vulnerable to overfitting were nicely tested. -->
 + Visualization of linear layers inside the models was great and their effects were clearly shown. Analyzing sparsity of the weights were also a good idea.
-+ Ablation studies were well done by comparing the substitutes of the typical model has including layer normalization or class token used in ViT. Experiment with utterly large models were also great.
-+ Trends of performance improvement by reducing the patch size (therby splitting models into many more patches) were aligned with previous results on ViT.
+<!-- + Ablation studies were well done by comparing the substitutes of the typical model including layer normalization or class token used in ViT. Experiment with utterly large models were also good to prove its scalability. Trends of performance improvement by reducing the patch size (therby splitting models into many more patches) were aligned with results from ViT. -->
 
 ### Weaknesses
-+ Due to the simplicity and innate nature of linear layers which is not data-driven, the model is efficient but their performance is still way behind the ViTs. Extension of figuring this out is necessary.
++ Due to the simplicity and innate nature of linear layers which is not data-driven, the model is efficient but their performance is still way behind the ViTs e.g., DeiT-S is superior to ResMLP-S24 in both efficiency and performance wise. Improving this remains as further work. 
 
 ### Rating and Justification
-+ Accept:
++ Accept: Their substitution of attention mechanism was well developed and clear evidence of their effects through experiment sequence.
 
 ### Additional Comments
-
++ None
 ### Score
-+ Strong Accept:
++ Strong Accept
 
 ### Relative Assessment
 + Paper 2 > Paper 1
@@ -73,6 +71,8 @@ The review for each paper should be structured as follows:
 + Definitely writing reviews makes people easy to catch weaknesses of a given paper. This objective attitude should be applied to my work as well...
 
 + To me, it was hard to choose between: well-made experiment with lag of performance vs. quite lack of experiment but comparable performance. I think I would rather choose the paper that has gives more insight to the community.
+
++ Firm understanding of introduced method has powerful role with having persuasiveness of rest of the paper.
 
 ## Reference
 
