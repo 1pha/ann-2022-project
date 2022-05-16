@@ -7,3 +7,5 @@ models/
 outputs/
 wandb/
 _models/
+
+.DS_Store
