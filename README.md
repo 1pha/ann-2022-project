@@ -30,6 +30,11 @@ Total 9 Configurations, with each configuration ran with 10 seeds, resulting in 
 
 Experiment results descirbed in [wandb report](https://wandb.ai/1pha/ann-2022-assignment2/reports/ANN2022-Assignment-2-Report--VmlldzoxOTUxOTI4?accessToken=skj92vqjs4l1uz8lc85jvnu8ykebiykhk2lgqgibhec38e0i71lu2ug1xy4d9oos)
 
+##  Project 3, 4: Review Papers like Conference Reviewers
+
+Review papers anonymously and write the review just like OpenReview. Reviews listed in [here](./paper-review/).
+
+
 [^1]: Szegedy, Christian, et al. "**Going deeper with convolutions.**" Proceedings of the IEEE conference on computer vision and pattern recognition. 2015.
 [^2]: Bello, Irwan, et al. "**Revisiting resnets: Improved training and scaling strategies.**" Advances in Neural Information Processing Systems 34 (2021).
 [^3]: Cubuk, Ekin D., et al. "**Randaugment: Practical automated data augmentation with a reduced search space.**" Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition Workshops. 2020.
